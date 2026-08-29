@@ -55,6 +55,7 @@ export function Reviews() {
         <Carousel
           ariaLabel="Vélemények"
           itemClassName="w-[80vw] sm:w-[340px] lg:w-[380px]"
+          autoScroll
         >
           {REVIEWS.map((review, i) => (
             <ReviewCard key={i} review={review} />
