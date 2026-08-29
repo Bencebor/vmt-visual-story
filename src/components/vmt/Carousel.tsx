@@ -39,6 +39,21 @@ export function Carousel({
     };
   }, [update]);
 
+  useEffect(() => {
+    if (!autoScroll || paused) return;
+    const el = trackRef.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = window.setInterval(() => {
+      if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 1) {
+        el.scrollLeft = 0;
+      } else {
+        el.scrollLeft += 1;
+      }
+    }, 28);
+    return () => window.clearInterval(id);
+  }, [autoScroll, paused]);
+
   const scrollBy = (dir: 1 | -1) => {
     const el = trackRef.current;
     if (!el) return;
@@ -48,12 +63,20 @@ export function Carousel({
   };
 
   return (
-    <div className="relative">
+    <div
+      className="relative"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocusCapture={() => setPaused(true)}
+      onBlurCapture={() => setPaused(false)}
+      onTouchStart={() => setPaused(true)}
+    >
       <ul
         ref={trackRef}
         aria-label={ariaLabel}
-        className="no-scrollbar -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-5 pb-2 md:-mx-10 md:px-10"
+        className={`no-scrollbar -mx-5 flex gap-4 overflow-x-auto px-5 pb-2 md:-mx-10 md:px-10 ${autoScroll ? "" : "snap-x snap-mandatory scroll-smooth"}`}
       >
+
         {children.map((child, i) => (
           <li key={i} className={`shrink-0 snap-start ${itemClassName}`}>
             {child}
