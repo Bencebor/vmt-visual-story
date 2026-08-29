@@ -5,13 +5,18 @@ export function Carousel({
   children,
   ariaLabel,
   itemClassName = "w-[74vw] sm:w-[300px] lg:w-[320px]",
+  autoScroll = false,
 }: {
   children: ReactNode[];
   ariaLabel: string;
   itemClassName?: string;
+  /** lassú, folyamatos automatikus görgetés (hoverre megáll) */
+  autoScroll?: boolean;
 }) {
   const trackRef = useRef<HTMLUListElement | null>(null);
   const [state, setState] = useState({ start: true, end: false });
+  const [paused, setPaused] = useState(false);
+
 
   const update = useCallback(() => {
     const el = trackRef.current;
