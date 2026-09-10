@@ -1,0 +1,1566 @@
+/*
+Theme Name: VMT – Visual Media Team
+Theme URI: https://vmt.hu
+Author: VMT – Visual Media Team
+Author URI: https://vmt.hu
+Description: Prémium, egyoldalas kreatív stúdió téma a VMT – Visual Media Team számára. Videó, fotó, social media és marketing tartalmak bemutatására, ingyenes konzultáció foglalással.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.7
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: vmt
+Tags: one-page, portfolio, business, custom-logo, custom-colors, responsive-layout
+*/
+
+/* =========================================================
+   1. Design tokenek
+   ========================================================= */
+:root {
+  --bg: #131316;
+  --surface: #17171b;
+  --card: #1d1d22;
+  --fg: #f7f7f8;
+  --muted: #9a9aa4;
+  --brand: #2f5fb0;
+  --brand-hover: #3b74d3;
+  --hairline: rgba(255, 255, 255, 0.09);
+  --border: rgba(255, 255, 255, 0.14);
+  --maxw: 1400px;
+  --pad: 20px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --font-display: "Sora", system-ui, -apple-system, sans-serif;
+  --font-body: "Manrope", system-ui, -apple-system, sans-serif;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --pad: 40px;
+  }
+}
+
+/* =========================================================
+   2. Alapok
+   ========================================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  margin: 0;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: var(--brand);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand-hover);
+  outline-offset: 3px;
+}
+
+.screen-reader-text {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
+.skip-link:focus {
+  position: fixed;
+  z-index: 999;
+  top: 12px;
+  left: 12px;
+  width: auto;
+  height: auto;
+  clip: auto;
+  background: var(--brand);
+  color: #fff;
+  padding: 10px 16px;
+}
+
+/* =========================================================
+   3. Layout segédek
+   ========================================================= */
+.vmt-wrap {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+}
+
+.vmt-section {
+  padding: 96px 0;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .vmt-section {
+    padding: 144px 0;
+  }
+}
+
+.vmt-section--alt {
+  background: var(--surface);
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.vmt-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.vmt-head {
+  max-width: 56rem;
+}
+
+.vmt-head h2 {
+  margin-top: 20px;
+  font-size: clamp(2rem, 5.2vw, 4rem);
+  font-weight: 700;
+}
+
+.vmt-head p {
+  margin-top: 24px;
+  max-width: 58ch;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.vmt-muted {
+  color: var(--muted);
+}
+
+/* =========================================================
+   4. Gombok
+   ========================================================= */
+.vmt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 24px;
+  border-radius: 3px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  border: 1px solid transparent;
+  transition:
+    transform 0.3s var(--ease),
+    background 0.3s var(--ease),
+    border-color 0.3s var(--ease),
+    box-shadow 0.3s var(--ease);
+}
+
+.vmt-btn--solid {
+  background: var(--brand);
+  color: #fff;
+}
+
+.vmt-btn--solid:hover {
+  background: var(--brand-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px -14px var(--brand-hover);
+}
+
+.vmt-btn--outline {
+  border-color: var(--border);
+  color: var(--fg);
+}
+
+.vmt-btn--outline:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+}
+
+.vmt-btn svg {
+  width: 15px;
+  height: 15px;
+  transition: transform 0.3s var(--ease);
+}
+
+.vmt-btn:hover svg {
+  transform: translate(2px, -2px);
+}
+
+/* =========================================================
+   5. Navigáció
+   ========================================================= */
+.vmt-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  border-bottom: 1px solid transparent;
+  transition:
+    background 0.5s var(--ease),
+    border-color 0.5s var(--ease);
+}
+
+.vmt-header.is-scrolled,
+.vmt-header.is-open {
+  background: rgba(19, 19, 22, 0.85);
+  backdrop-filter: blur(18px);
+  border-bottom-color: var(--hairline);
+}
+
+.vmt-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 64px;
+}
+
+@media (min-width: 640px) {
+  .vmt-nav {
+    height: 72px;
+  }
+}
+
+.vmt-logo img {
+  height: 26px;
+  width: auto;
+}
+
+.vmt-logo--light img {
+  filter: brightness(0) invert(1);
+}
+
+.vmt-menu {
+  display: none;
+  align-items: center;
+  gap: 36px;
+}
+
+@media (min-width: 1024px) {
+  .vmt-menu {
+    display: flex;
+  }
+}
+
+.vmt-menu a {
+  position: relative;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted);
+  transition: color 0.3s var(--ease);
+}
+
+.vmt-menu a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 1px;
+  background: var(--brand-hover);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s var(--ease);
+}
+
+.vmt-menu a:hover {
+  color: var(--fg);
+}
+
+.vmt-menu a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.vmt-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vmt-nav-cta {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .vmt-nav-cta {
+    display: inline-flex;
+    padding: 10px 20px;
+  }
+}
+
+.vmt-burger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+@media (min-width: 1024px) {
+  .vmt-burger {
+    display: none;
+  }
+}
+
+.vmt-mobile {
+  display: none;
+  border-top: 1px solid var(--hairline);
+  background: var(--bg);
+}
+
+.vmt-mobile.is-open {
+  display: block;
+}
+
+.vmt-mobile ul {
+  padding: 16px var(--pad) 28px;
+  max-width: var(--maxw);
+  margin: 0 auto;
+}
+
+.vmt-mobile a {
+  display: block;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--hairline);
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.vmt-mobile .vmt-btn {
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* =========================================================
+   6. Hero
+   ========================================================= */
+.vmt-hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  padding: 128px 0 80px;
+}
+
+.vmt-hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.vmt-hero__media img,
+.vmt-hero__media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.vmt-hero__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, var(--bg) 4%, rgba(19, 19, 22, 0.25) 60%),
+    rgba(19, 19, 22, 0.55);
+}
+
+.vmt-hero h1 {
+  margin-top: 24px;
+  max-width: 16ch;
+  font-size: clamp(2.6rem, 8.5vw, 7rem);
+  font-weight: 800;
+  line-height: 0.92;
+}
+
+.vmt-hero__lead {
+  display: grid;
+  gap: 32px;
+  margin-top: 32px;
+  padding-top: 32px;
+  border-top: 1px solid var(--hairline);
+}
+
+@media (min-width: 768px) {
+  .vmt-hero__lead {
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+  }
+}
+
+.vmt-hero__lead strong {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1.35;
+  max-width: 34ch;
+}
+
+.vmt-hero__lead p {
+  color: var(--muted);
+  font-size: 15px;
+  max-width: 48ch;
+}
+
+.vmt-hero__cta {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 40px;
+}
+
+@media (min-width: 640px) {
+  .vmt-hero__cta {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.vmt-scroll {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 56px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.vmt-scroll span[aria-hidden] {
+  position: relative;
+  display: block;
+  width: 1px;
+  height: 40px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.vmt-scroll span[aria-hidden]::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 16px;
+  background: var(--brand-hover);
+  animation: vmt-scroll 2.4s ease-in-out infinite;
+}
+
+@keyframes vmt-scroll {
+  0%,
+  100% {
+    transform: translateY(-100%);
+  }
+  50% {
+    transform: translateY(160%);
+  }
+}
+
+/* =========================================================
+   7. Scroll reveal
+   ========================================================= */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.9s var(--ease),
+    transform 0.9s var(--ease);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* =========================================================
+   8. Szolgáltatások
+   ========================================================= */
+.vmt-services {
+  display: grid;
+  gap: 1px;
+  margin-top: 64px;
+  background: var(--hairline);
+  border: 1px solid var(--hairline);
+}
+
+@media (min-width: 640px) {
+  .vmt-services {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .vmt-services {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.vmt-service {
+  position: relative;
+  background: var(--bg);
+  padding: 32px;
+  transition: background 0.5s var(--ease);
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .vmt-service {
+    padding: 40px;
+  }
+}
+
+.vmt-service:hover {
+  background: var(--surface);
+}
+
+.vmt-service::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1px;
+  width: 0;
+  background: var(--brand-hover);
+  transition: width 0.5s var(--ease);
+}
+
+.vmt-service:hover::before {
+  width: 100%;
+}
+
+.vmt-service svg {
+  width: 24px;
+  height: 24px;
+  color: var(--brand-hover);
+}
+
+.vmt-service h3 {
+  margin-top: 56px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.vmt-service p {
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* =========================================================
+   9. Személyre szabott terv
+   ========================================================= */
+.vmt-split {
+  display: grid;
+  gap: 48px;
+}
+
+@media (min-width: 1024px) {
+  .vmt-split {
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+  }
+}
+
+.vmt-chain li {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.vmt-chain li:first-child {
+  border-top: 1px solid var(--hairline);
+}
+
+.vmt-chain .num {
+  width: 32px;
+  flex: none;
+  font-size: 12px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.vmt-chain .txt {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  transition: transform 0.5s var(--ease);
+}
+
+.vmt-chain li:hover .txt {
+  transform: translateX(4px);
+}
+
+.vmt-chain .dot {
+  width: 6px;
+  height: 6px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background 0.5s var(--ease);
+}
+
+.vmt-chain li:hover .dot {
+  background: var(--brand-hover);
+}
+
+.vmt-note {
+  margin-top: 32px;
+  max-width: 52ch;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* =========================================================
+   10. Miért VMT
+   ========================================================= */
+.vmt-points {
+  display: grid;
+  gap: 48px;
+  margin-top: 80px;
+}
+
+@media (min-width: 768px) {
+  .vmt-points {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+}
+
+.vmt-point {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+  transition: border-color 0.5s var(--ease);
+}
+
+.vmt-point:hover {
+  border-top-color: var(--brand-hover);
+}
+
+.vmt-point .num {
+  font-size: 14px;
+  color: var(--brand-hover);
+  font-variant-numeric: tabular-nums;
+}
+
+.vmt-point h3 {
+  margin-top: 24px;
+  font-size: clamp(1.8rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+}
+
+.vmt-point p {
+  margin-top: 16px;
+  max-width: 34ch;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+/* =========================================================
+   11. Számok
+   ========================================================= */
+.vmt-stats {
+  display: grid;
+  gap: 1px;
+  margin-top: 64px;
+  background: var(--hairline);
+  border: 1px solid var(--hairline);
+}
+
+@media (min-width: 768px) {
+  .vmt-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.vmt-stat {
+  background: var(--surface);
+  padding: 32px;
+}
+
+@media (min-width: 768px) {
+  .vmt-stat {
+    padding: 48px;
+  }
+}
+
+.vmt-stat svg {
+  width: 20px;
+  height: 20px;
+  color: var(--muted);
+  transition: color 0.5s var(--ease);
+}
+
+.vmt-stat:hover svg {
+  color: var(--brand-hover);
+}
+
+.vmt-stat .value {
+  margin-top: 48px;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.vmt-stat .label {
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.vmt-stat .bar {
+  display: block;
+  height: 1px;
+  width: 100%;
+  margin-top: 32px;
+  background: var(--brand-hover);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s var(--ease);
+}
+
+.vmt-stat:hover .bar {
+  transform: scaleX(1);
+}
+
+/* =========================================================
+   12. Partner marquee
+   ========================================================= */
+.vmt-marquee {
+  position: relative;
+  margin: 64px calc(var(--pad) * -1) 0;
+  padding: 40px 0;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+}
+
+.vmt-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: vmt-marquee 46s linear infinite;
+}
+
+.vmt-marquee:hover .vmt-marquee__track {
+  animation-play-state: paused;
+}
+
+@keyframes vmt-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.vmt-marquee li {
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  flex: none;
+}
+
+@media (min-width: 768px) {
+  .vmt-marquee li {
+    padding: 0 56px;
+  }
+}
+
+.vmt-marquee span {
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--muted);
+  transition: color 0.5s var(--ease);
+}
+
+.vmt-marquee li:hover span {
+  color: var(--fg);
+}
+
+.vmt-marquee img {
+  height: 36px;
+  width: auto;
+  filter: grayscale(1);
+  opacity: 0.45;
+  transition:
+    opacity 0.5s var(--ease),
+    filter 0.5s var(--ease);
+}
+
+.vmt-marquee li:hover img {
+  opacity: 1;
+  filter: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vmt-marquee__track {
+    animation: none;
+  }
+}
+
+/* =========================================================
+   13. Karusszelek
+   ========================================================= */
+.vmt-carousel {
+  position: relative;
+  margin-top: 56px;
+}
+
+.vmt-carousel__track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 0 var(--pad) 8px;
+  margin: 0 calc(var(--pad) * -1);
+  scrollbar-width: none;
+}
+
+.vmt-carousel__track::-webkit-scrollbar {
+  display: none;
+}
+
+.vmt-carousel__track > li {
+  flex: none;
+  scroll-snap-align: start;
+  width: 74vw;
+}
+
+@media (min-width: 640px) {
+  .vmt-carousel__track > li {
+    width: 300px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .vmt-carousel__track > li {
+    width: 320px;
+  }
+}
+
+.vmt-carousel--reviews .vmt-carousel__track > li {
+  width: 80vw;
+}
+
+@media (min-width: 640px) {
+  .vmt-carousel--reviews .vmt-carousel__track > li {
+    width: 360px;
+  }
+}
+
+.vmt-carousel__nav {
+  display: flex;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.vmt-carousel__nav button {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: none;
+  cursor: pointer;
+  transition:
+    background 0.3s var(--ease),
+    border-color 0.3s var(--ease),
+    opacity 0.3s var(--ease);
+}
+
+.vmt-carousel__nav button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.vmt-carousel__nav button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.vmt-carousel__nav svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Videó kártya */
+.vmt-video {
+  display: block;
+  border: 1px solid var(--hairline);
+  border-radius: 3px;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.vmt-video__thumb {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+}
+
+.vmt-video__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.9s var(--ease);
+}
+
+.vmt-video:hover .vmt-video__thumb img {
+  transform: scale(1.05);
+}
+
+.vmt-video__tag {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 3px;
+  background: rgba(19, 19, 22, 0.7);
+  backdrop-filter: blur(6px);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.vmt-video__play {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  width: 48px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--brand);
+  color: #fff;
+  transition: transform 0.5s var(--ease);
+}
+
+.vmt-video:hover .vmt-video__play {
+  transform: scale(1.1);
+}
+
+.vmt-video__meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+  border-top: 1px solid var(--hairline);
+}
+
+.vmt-video__meta h3 {
+  font-size: 14px;
+  font-weight: 600;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vmt-video__meta span {
+  flex: none;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* =========================================================
+   14. Statikus tartalom rács
+   ========================================================= */
+.vmt-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 64px;
+}
+
+@media (min-width: 640px) {
+  .vmt-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .vmt-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.vmt-tile {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  border-radius: 3px;
+  margin: 0;
+}
+
+.vmt-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.1s var(--ease);
+}
+
+.vmt-tile:hover img {
+  transform: scale(1.06);
+}
+
+.vmt-tile--portrait {
+  aspect-ratio: 3 / 4;
+  grid-row: span 2;
+}
+
+.vmt-tile--square {
+  aspect-ratio: 1 / 1;
+}
+
+.vmt-tile--landscape {
+  aspect-ratio: 16 / 10;
+}
+
+@media (min-width: 640px) {
+  .vmt-tile--landscape {
+    grid-column: span 2;
+  }
+}
+
+.vmt-tile figcaption {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 16px;
+  background: linear-gradient(to top, rgba(19, 19, 22, 0.85), transparent);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 0.5s var(--ease),
+    transform 0.5s var(--ease);
+}
+
+.vmt-tile:hover figcaption {
+  opacity: 1;
+  transform: none;
+}
+
+/* =========================================================
+   15. Folyamat idővonal
+   ========================================================= */
+.vmt-timeline {
+  position: relative;
+  margin-top: 80px;
+}
+
+.vmt-timeline__rail,
+.vmt-timeline__fill {
+  position: absolute;
+  left: 13px;
+  top: 16px;
+  width: 1px;
+}
+
+.vmt-timeline__rail {
+  bottom: 32px;
+  background: var(--border);
+}
+
+.vmt-timeline__fill {
+  height: 0;
+  background: var(--brand-hover);
+  transition: height 0.2s linear;
+}
+
+.vmt-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 0 24px;
+  padding-bottom: 56px;
+}
+
+@media (min-width: 768px) {
+  .vmt-step {
+    gap: 0 48px;
+  }
+}
+
+.vmt-step:last-child {
+  padding-bottom: 0;
+}
+
+.vmt-step__dot {
+  margin-top: 12px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  transition:
+    transform 0.5s var(--ease),
+    background 0.5s var(--ease),
+    border-color 0.5s var(--ease),
+    box-shadow 0.5s var(--ease);
+}
+
+.vmt-step.is-active .vmt-step__dot {
+  transform: scale(1.1);
+  background: var(--brand);
+  border-color: var(--brand);
+  box-shadow: 0 0 0 6px rgba(47, 95, 176, 0.18);
+}
+
+.vmt-step__body {
+  opacity: 0.4;
+  transform: translateY(12px);
+  transition:
+    opacity 0.7s var(--ease),
+    transform 0.7s var(--ease);
+}
+
+.vmt-step.is-active .vmt-step__body {
+  opacity: 1;
+  transform: none;
+}
+
+.vmt-step__title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 16px;
+}
+
+.vmt-step__title .num {
+  font-size: 14px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  transition: color 0.5s var(--ease);
+}
+
+.vmt-step.is-active .num {
+  color: var(--brand-hover);
+}
+
+.vmt-step__title h3 {
+  font-size: clamp(1.5rem, 3.6vw, 2.25rem);
+  font-weight: 700;
+}
+
+.vmt-step__body p {
+  margin-top: 12px;
+  max-width: 46ch;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+/* =========================================================
+   16. Rólunk
+   ========================================================= */
+.vmt-team {
+  display: grid;
+  gap: 24px;
+  margin-top: 64px;
+}
+
+@media (min-width: 768px) {
+  .vmt-team {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+}
+
+.vmt-person {
+  border: 1px solid var(--hairline);
+  border-radius: 3px;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.vmt-person__photo {
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  position: relative;
+}
+
+.vmt-person__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  filter: grayscale(1);
+  transition:
+    transform 1.1s var(--ease),
+    filter 1.1s var(--ease);
+}
+
+.vmt-person:hover .vmt-person__photo img {
+  transform: scale(1.04);
+  filter: none;
+}
+
+.vmt-person__body {
+  padding: 28px;
+}
+
+@media (min-width: 768px) {
+  .vmt-person__body {
+    padding: 36px;
+  }
+}
+
+.vmt-person__body h3 {
+  font-size: clamp(1.5rem, 3vw, 1.875rem);
+  font-weight: 700;
+}
+
+.vmt-person__role {
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--brand-hover);
+}
+
+.vmt-person__bio {
+  margin-top: 20px;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.vmt-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.vmt-skills li {
+  padding: 6px 12px;
+  border: 1px solid var(--hairline);
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.vmt-statement {
+  margin-top: 56px;
+  max-width: 24ch;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* =========================================================
+   17. Vélemények
+   ========================================================= */
+.vmt-review {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 28px;
+  border: 1px solid var(--hairline);
+  border-radius: 3px;
+  background: var(--surface);
+}
+
+.vmt-review__stars {
+  display: flex;
+  gap: 4px;
+  color: var(--brand-hover);
+}
+
+.vmt-review__stars svg {
+  width: 16px;
+  height: 16px;
+}
+
+.vmt-review p {
+  margin-top: 24px;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.vmt-review footer {
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--hairline);
+}
+
+.vmt-review footer strong {
+  font-family: var(--font-display);
+  font-size: 14px;
+}
+
+.vmt-review footer span {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* =========================================================
+   18. Záró CTA
+   ========================================================= */
+.vmt-final {
+  max-width: 56rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.vmt-final h2 {
+  margin-top: 24px;
+  font-size: clamp(2.2rem, 6vw, 4.5rem);
+  font-weight: 800;
+}
+
+.vmt-final > p {
+  margin: 28px auto 0;
+  max-width: 58ch;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.vmt-final__cta {
+  margin-top: 40px;
+}
+
+.vmt-final__meta {
+  margin-top: 20px;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* =========================================================
+   19. Kapcsolat
+   ========================================================= */
+.vmt-contact-list {
+  border-top: 1px solid var(--hairline);
+}
+
+.vmt-contact-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.vmt-contact-list .who strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.6vw, 1.5rem);
+  font-weight: 600;
+}
+
+.vmt-contact-list .who span {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.vmt-contact-list a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  transition: color 0.3s var(--ease);
+}
+
+.vmt-contact-list a:hover {
+  color: var(--brand-hover);
+}
+
+.vmt-contact-list svg {
+  width: 16px;
+  height: 16px;
+  color: var(--brand-hover);
+  flex: none;
+}
+
+/* =========================================================
+   20. Lábléc
+   ========================================================= */
+.vmt-footer {
+  border-top: 1px solid var(--hairline);
+  background: var(--bg);
+}
+
+.vmt-footer__grid {
+  display: grid;
+  gap: 48px;
+  padding: 64px 0;
+}
+
+@media (min-width: 768px) {
+  .vmt-footer__grid {
+    grid-template-columns: 1.4fr 1fr 1fr;
+    padding: 80px 0;
+  }
+}
+
+.vmt-footer__brand p:first-of-type {
+  margin-top: 24px;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.vmt-footer__brand p:last-of-type {
+  margin-top: 8px;
+  max-width: 36ch;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.vmt-footer ul {
+  margin-top: 20px;
+  display: grid;
+  gap: 12px;
+}
+
+.vmt-footer ul a {
+  font-size: 14px;
+  color: var(--muted);
+  transition: color 0.3s var(--ease);
+}
+
+.vmt-footer ul a:hover {
+  color: var(--fg);
+}
+
+.vmt-footer__bottom {
+  border-top: 1px solid var(--hairline);
+}
+
+.vmt-footer__bottom .vmt-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+@media (min-width: 640px) {
+  .vmt-footer__bottom .vmt-wrap {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
